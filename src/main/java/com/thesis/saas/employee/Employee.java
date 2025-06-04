@@ -13,22 +13,28 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
+@Table(name="employee")
 public class Employee {
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private long id;
 
+    @Column(nullable = false)
     private String firstname;
+
+    @Column(nullable = false)
     private String lastname;
+
     private String email;
     private String phone;
     private String role;
 
-    @ManyToMany
+    @ManyToMany(mappedBy = "workers")
     private List<Project> projects;
 
     @ManyToOne
+    @JoinColumn(name = "company_id")
     private Company company;
 
     public Employee(String firstname, String lastname, String email, String phone, String role) {

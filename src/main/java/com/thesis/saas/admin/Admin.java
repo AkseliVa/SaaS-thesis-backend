@@ -10,14 +10,19 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
+@Table(name="admins")
 public class Admin {
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private long id;
 
+    @Column(nullable = false, unique=true)
     private String username;
+
+    @Column(nullable = false)
     private String password;
+
     private String firstname;
     private String lastname;
 
