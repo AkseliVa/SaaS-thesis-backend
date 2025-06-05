@@ -8,6 +8,7 @@ import com.thesis.saas.employee.Employee;
 import com.thesis.saas.employee.EmployeeRepository;
 import com.thesis.saas.project.Project;
 import com.thesis.saas.project.ProjectRepository;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -15,17 +16,17 @@ import java.time.LocalDate;
 import java.util.Arrays;
 
 @SpringBootApplication
-public class SaaSApplication {
+public class SaaSApplication implements CommandLineRunner {
     private final AdminRepository adminRepository;
     private final CompanyRepository companyRepository;
     private final EmployeeRepository employeeRepository;
     private final ProjectRepository projectRepository;
 
     public SaaSApplication(AdminRepository aRepository, CompanyRepository cRepository, EmployeeRepository eRepository, ProjectRepository pRepository) {
-        adminRepository = aRepository;
-        companyRepository = cRepository;
-        employeeRepository = eRepository;
-        projectRepository = pRepository;
+        this.adminRepository = aRepository;
+        this.companyRepository = cRepository;
+        this.employeeRepository = eRepository;
+        this.projectRepository = pRepository;
     }
 
     public static void main(String[] args) {
@@ -33,20 +34,20 @@ public class SaaSApplication {
     }
 
     public void run (String... args) throws Exception {
-        // Add employees
-        Employee employee1 = new Employee("Matti", "Meikäläinen", "matti@gmail.com", "0408028052", "IT");
-        Employee employee2 = new Employee("Tiina", "Teikäläinen", "tiina@gmail.com", "045125471", "HR");
-        Employee employee3 = new Employee("Pete", "Perikkä", "pete@gmail.com", "040289888", "Engineer");
-        Employee employee4 = new Employee("Laura", "Larppaaja", "laura@gmail.com", "040556677", "Sales");
-        Employee employee5 = new Employee("Sauli", "Savetti", "sauli@gmail.com", "045129866", "IT");
-
-        employeeRepository.saveAll(Arrays.asList(employee1, employee2, employee3, employee4, employee5));
-
         // Add companies
         Company company1 = new Company("Hykos");
         Company company2 = new Company("Transmer");
 
         companyRepository.saveAll(Arrays.asList(company1, company2));
+
+        // Add employees
+        Employee employee1 = new Employee("Matti", "Meikäläinen", "matti@gmail.com", "0408028052", "IT", company1);
+        Employee employee2 = new Employee("Tiina", "Teikäläinen", "tiina@gmail.com", "045125471", "HR", company1);
+        Employee employee3 = new Employee("Pete", "Perikkä", "pete@gmail.com", "040289888", "Engineer", company1);
+        Employee employee4 = new Employee("Laura", "Larppaaja", "laura@gmail.com", "040556677", "Sales", company2);
+        Employee employee5 = new Employee("Sauli", "Savetti", "sauli@gmail.com", "045129866", "IT", company2);
+
+        employeeRepository.saveAll(Arrays.asList(employee1, employee2, employee3, employee4, employee5));
 
         // Add admins
         Admin admin1 = new Admin("testadmin", "testadmin", "Andy", "Admin", company1);

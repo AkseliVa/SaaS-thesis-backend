@@ -17,7 +17,7 @@ import java.util.List;
 public class Employee {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private long id;
 
     @Column(nullable = false)
@@ -37,11 +37,12 @@ public class Employee {
     @JoinColumn(name = "company_id")
     private Company company;
 
-    public Employee(String firstname, String lastname, String email, String phone, String role) {
+    public Employee(String firstname, String lastname, String email, String phone, String role, Company company) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.email = email;
         this.phone = phone;
         this.role = role;
+        this.company = company;
     }
 }
