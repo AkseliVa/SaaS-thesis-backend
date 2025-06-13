@@ -40,6 +40,12 @@ public class SaaSApplication implements CommandLineRunner {
 
         companyRepository.saveAll(Arrays.asList(company1, company2));
 
+        // Add projects
+        Project project1 = new Project("testproject", "testprojectdescription", LocalDate.of(2024, 1, 13), LocalDate.of(2024, 2, 13), company1);
+        Project project2 = new Project("secondproject", "secondprojectdescription", LocalDate.of(2025, 6, 15), LocalDate.of(2025, 7, 15), company2);
+
+        projectRepository.saveAll(Arrays.asList(project1, project2));
+
         // Add employees
         Employee employee1 = new Employee("Matti", "Meikäläinen", "matti@gmail.com", "0408028052", "IT", company1);
         Employee employee2 = new Employee("Tiina", "Teikäläinen", "tiina@gmail.com", "045125471", "HR", company1);
@@ -55,10 +61,6 @@ public class SaaSApplication implements CommandLineRunner {
 
         adminRepository.saveAll(Arrays.asList(admin1, admin2));
 
-        // Add projects
-        Project project1 = new Project("testproject", "testprojectdescription", LocalDate.of(2024, 1, 13), LocalDate.of(2024, 2, 13), company1);
-        Project project2 = new Project("secondproject", "secondprojectdescription", LocalDate.of(2025, 6, 15), LocalDate.of(2025, 7, 15), company2);
 
-        projectRepository.saveAll(Arrays.asList(project1, project2));
     }
 }

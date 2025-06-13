@@ -1,5 +1,6 @@
 package com.thesis.saas.project;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.thesis.saas.company.Company;
 import com.thesis.saas.employee.Employee;
 import jakarta.persistence.*;
@@ -28,6 +29,7 @@ public class Project {
     private LocalDate startDate;
     private LocalDate endDate;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "company_id")
     private Company company;

@@ -1,5 +1,6 @@
 package com.thesis.saas.company;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.thesis.saas.employee.Employee;
 import com.thesis.saas.project.Project;
 import jakarta.persistence.*;
@@ -18,7 +19,7 @@ public class Company {
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private long id;
+    private long company_id;
 
     @Column(nullable = false, unique=true)
     private String name;

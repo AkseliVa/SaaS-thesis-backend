@@ -13,7 +13,7 @@ public class CompanyController {
         this.companyRepository = companyRepository;
     }
 
-    @GetMapping("/companies")
+    @GetMapping("/api/companies")
     public Iterable<Company> getAllCompanies() {
         return companyRepository.findAll();
     }

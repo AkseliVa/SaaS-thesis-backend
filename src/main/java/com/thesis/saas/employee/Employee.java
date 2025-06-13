@@ -1,5 +1,6 @@
 package com.thesis.saas.employee;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.thesis.saas.company.Company;
 import com.thesis.saas.project.Project;
 import jakarta.persistence.*;
@@ -33,6 +34,7 @@ public class Employee {
     @ManyToMany(mappedBy = "workers")
     private List<Project> projects;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "company_id")
     private Company company;
