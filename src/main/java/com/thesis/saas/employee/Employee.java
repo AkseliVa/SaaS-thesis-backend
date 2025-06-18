@@ -1,5 +1,6 @@
 package com.thesis.saas.employee;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.thesis.saas.company.Company;
 import com.thesis.saas.project.Project;
@@ -34,7 +35,7 @@ public class Employee {
     @ManyToMany(mappedBy = "workers")
     private List<Project> projects;
 
-    @JsonIgnore
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "company_id")
     private Company company;

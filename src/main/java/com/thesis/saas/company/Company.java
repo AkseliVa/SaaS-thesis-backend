@@ -1,6 +1,7 @@
 package com.thesis.saas.company;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.thesis.saas.employee.Employee;
 import com.thesis.saas.project.Project;
 import jakarta.persistence.*;
@@ -24,6 +25,7 @@ public class Company {
     @Column(nullable = false, unique=true)
     private String name;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "company")
     private List<Employee> employees;
 
