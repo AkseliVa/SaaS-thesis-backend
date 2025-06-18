@@ -1,6 +1,5 @@
 package com.thesis.saas.company;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.thesis.saas.employee.Employee;
 import com.thesis.saas.project.Project;

@@ -1,7 +1,6 @@
 package com.thesis.saas.employee;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.thesis.saas.company.Company;
 import com.thesis.saas.project.Project;
 import jakarta.persistence.*;
