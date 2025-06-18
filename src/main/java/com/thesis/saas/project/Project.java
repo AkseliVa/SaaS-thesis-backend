@@ -1,5 +1,6 @@
 package com.thesis.saas.project;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.thesis.saas.company.Company;
 import com.thesis.saas.employee.Employee;
@@ -20,7 +21,7 @@ public class Project {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private long project_id;
 
     @Column(nullable = false)
     private String name;
@@ -29,7 +30,7 @@ public class Project {
     private LocalDate startDate;
     private LocalDate endDate;
 
-    @JsonIgnore
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "company_id")
     private Company company;
