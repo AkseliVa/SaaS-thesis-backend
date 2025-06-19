@@ -1,9 +1,6 @@
 package com.thesis.saas.admin;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class AdminController {
@@ -21,6 +18,11 @@ public class AdminController {
     @PostMapping("/api/admins")
     public Admin newAdmin(@RequestBody Admin admin) {
         return adminRepository.save(admin);
+    }
+
+    @GetMapping("/api/admins/{id}")
+    public Admin getAdmin(@PathVariable long id) {
+        return adminRepository.findById(id).orElse(null);
     }
     
 }
