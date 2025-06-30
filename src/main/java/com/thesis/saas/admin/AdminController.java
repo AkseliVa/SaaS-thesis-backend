@@ -24,5 +24,10 @@ public class AdminController {
     public Admin getAdmin(@PathVariable long id) {
         return adminRepository.findById(id).orElse(null);
     }
+
+    @DeleteMapping("/api/admins/{id}")
+    public void deleteAdmin(@PathVariable long id) {
+        adminRepository.deleteById(id);
+    }
     
 }

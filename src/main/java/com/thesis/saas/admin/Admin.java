@@ -26,7 +26,7 @@ public class Admin {
     private String firstname;
     private String lastname;
 
-    @OneToOne
+    @OneToOne(orphanRemoval = true)
     private Company company;
 
     public Admin(String username, String password, String firstname, String lastname, Company company) {

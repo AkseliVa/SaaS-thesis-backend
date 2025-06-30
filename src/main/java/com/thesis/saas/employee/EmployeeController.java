@@ -1,9 +1,6 @@
 package com.thesis.saas.employee;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class EmployeeController {
@@ -21,5 +18,10 @@ public class EmployeeController {
     @PostMapping("/api/employees")
     public Employee newEmployee(@RequestBody Employee employee) {
         return employeeRepository.save(employee);
+    }
+
+    @DeleteMapping("/api/employees/{id}")
+    public void deleteEmployee(@PathVariable long id) {
+        employeeRepository.deleteById(id);
     }
 }

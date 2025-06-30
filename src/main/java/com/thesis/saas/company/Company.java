@@ -25,10 +25,10 @@ public class Company {
     private String name;
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "company")
+    @OneToMany(mappedBy = "company", orphanRemoval = true, cascade = CascadeType.ALL)
     private List<Employee> employees;
 
-    @OneToMany(mappedBy = "company")
+    @OneToMany(mappedBy = "company", orphanRemoval = true, cascade = CascadeType.ALL)
     private List<Project> projects;
 
     public Company(String name) {

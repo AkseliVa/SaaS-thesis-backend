@@ -1,9 +1,7 @@
 package com.thesis.saas.company;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import com.thesis.saas.project.Project;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class CompanyController {
@@ -21,5 +19,17 @@ public class CompanyController {
     @PostMapping("/api/companies")
     public Company newCompany(@RequestBody Company company) {
         return companyRepository.save(company);
+    }
+
+    @DeleteMapping("/api/companies/{id}")
+    public void deleteCompany(@PathVariable long id) {
+        Company company = companyRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Company not found"));
+
+        for (Project project : company.getProjects()) {
+            project.getWorkers().clear();
+        }
+
+        companyRepository.deleteById(id);
     }
 }
