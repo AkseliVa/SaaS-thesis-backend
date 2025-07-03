@@ -24,4 +24,18 @@ public class ProjectController {
     public void deleteProject(@PathVariable Long id) {
         projectRepository.deleteById(id);
     }
+
+    @PutMapping("/api/projects/{id}")
+    public Project updateProject(@PathVariable Long id, @RequestBody Project project) {
+        return projectRepository.findById(id)
+                .map(existingProject -> {
+                    existingProject.setName(project.getName());
+                    existingProject.setDescription(project.getDescription());
+                    existingProject.setStartDate(project.getStartDate());
+                    existingProject.setEndDate(project.getEndDate());
+
+                    return projectRepository.save(existingProject);
+                })
+                .orElseThrow(() -> new RuntimeException("Project not found"));
+    }
 }
