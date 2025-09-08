@@ -33,6 +33,7 @@ public class ProjectController {
                     existingProject.setDescription(project.getDescription());
                     existingProject.setStartDate(project.getStartDate());
                     existingProject.setEndDate(project.getEndDate());
+                    existingProject.setActive(project.getActive());
 
                     return projectRepository.save(existingProject);
                 })

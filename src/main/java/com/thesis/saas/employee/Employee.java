@@ -1,14 +1,13 @@
 package com.thesis.saas.employee;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.thesis.saas.company.Company;
-import com.thesis.saas.project.Project;
+import com.thesis.saas.project.ProjectsEmployees;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.util.List;
 
 @Entity
 @Getter
@@ -31,11 +30,12 @@ public class Employee {
     private String phone;
     private String role;
 
-    @ManyToMany(mappedBy = "workers")
-    private List<Project> projects;
+    @JsonManagedReference
+    @OneToOne(mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = true)
+    private EmployeesProjects employeesProjects;
 
-    @JsonBackReference
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "company_id")
     private Company company;
 

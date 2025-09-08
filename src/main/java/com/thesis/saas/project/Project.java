@@ -1,9 +1,9 @@
 package com.thesis.saas.project;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.*;
 import com.thesis.saas.company.Company;
 import com.thesis.saas.employee.Employee;
+import com.thesis.saas.employee.EmployeesProjects;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,19 +29,16 @@ public class Project {
     private String description;
     private LocalDate startDate;
     private LocalDate endDate;
+    private Boolean active;
 
     @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "company_id")
     private Company company;
 
-    @ManyToMany
-    @JoinTable(
-            name = "project_employee",
-            joinColumns = @JoinColumn(name = "project_id"),
-            inverseJoinColumns = @JoinColumn(name = "employee_id")
-    )
-    private List<Employee> workers;
+    @JsonManagedReference
+    @OneToOne(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
+    private ProjectsEmployees projectsEmployees;
 
     public Project(String name, String description, LocalDate startDate, LocalDate endDate, Company company) {
         this.name = name;
@@ -50,4 +47,23 @@ public class Project {
         this.endDate = endDate;
         this.company = company;
     }
+
+    public Project(String name, String description, LocalDate startDate, LocalDate endDate, Company company, Boolean active) {
+        this.name = name;
+        this.description = description;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.company = company;
+        this.active = active;
+    }
+
+    public Project(String name, String description, LocalDate startDate, LocalDate endDate, Company company, Boolean active, List<Employee> workers) {
+        this.name = name;
+        this.description = description;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.company = company;
+        this.active = active;
+    }
+
 }

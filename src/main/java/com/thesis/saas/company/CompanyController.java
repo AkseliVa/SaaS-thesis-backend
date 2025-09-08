@@ -16,6 +16,11 @@ public class CompanyController {
         return companyRepository.findAll();
     }
 
+    @GetMapping("/api/companies/{id}")
+    public Company getCompany(@PathVariable long id) {
+        return companyRepository.findById(id).orElse(null);
+    }
+
     @PostMapping("/api/companies")
     public Company newCompany(@RequestBody Company company) {
         return companyRepository.save(company);
@@ -26,9 +31,9 @@ public class CompanyController {
         Company company = companyRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Company not found"));
 
-        for (Project project : company.getProjects()) {
-            project.getWorkers().clear();
-        }
+        //for (Project project : company.getProjects()) {
+        //  project.getProjectEmployees().clear();
+        //}
 
         companyRepository.deleteById(id);
     }
