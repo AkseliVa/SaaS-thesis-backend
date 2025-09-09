@@ -1,6 +1,7 @@
 package com.thesis.saas.employee;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.thesis.saas.company.Company;
 import com.thesis.saas.project.ProjectsEmployees;
@@ -8,6 +9,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
 
 @Entity
 @Getter
@@ -31,8 +34,9 @@ public class Employee {
     private String role;
 
     @JsonManagedReference
-    @OneToOne(mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = true)
-    private EmployeesProjects employeesProjects;
+    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnoreProperties(allowSetters = true, value = {"employee"})
+    private List<EmployeesProjects> employeesProjects;
 
     @ManyToOne
     @JsonBackReference

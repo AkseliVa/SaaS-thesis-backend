@@ -21,7 +21,7 @@ public class EmployeesProjects {
     private long ep_id;
 
     @JsonBackReference
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "employee_id")
     private Employee employee;
 

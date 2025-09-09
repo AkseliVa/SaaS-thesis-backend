@@ -1,13 +1,17 @@
 package com.thesis.saas.project;
 
+import com.thesis.saas.company.Company;
+import com.thesis.saas.company.CompanyRepository;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class ProjectController {
     private final ProjectRepository projectRepository;
+    private final CompanyRepository companyRepository;
 
-    public ProjectController(ProjectRepository projectRepository) {
+    public ProjectController(ProjectRepository projectRepository, CompanyRepository companyRepository) {
         this.projectRepository = projectRepository;
+        this.companyRepository = companyRepository;
     }
 
     @GetMapping("/api/projects")
@@ -16,7 +20,18 @@ public class ProjectController {
     }
 
     @PostMapping("/api/projects")
-    public Project newProject(@RequestBody Project project) {
+    public Project newProject(@RequestBody ProjectDTO dto) {
+        Company company = companyRepository.findById(dto.companyId())
+                .orElseThrow(() -> new RuntimeException("Company not found"));
+
+        Project project = new Project(
+                dto.name(),
+                dto.description(),
+                dto.startDate(),
+                dto.endDate(),
+                company,
+                dto.active()
+        );
         return projectRepository.save(project);
     }
 

@@ -1,13 +1,18 @@
 package com.thesis.saas.employee;
 
+import com.thesis.saas.company.CompanyRepository;
 import org.springframework.web.bind.annotation.*;
+
+import com.thesis.saas.company.Company;
 
 @RestController
 public class EmployeeController {
     private final EmployeeRepository employeeRepository;
+    private final CompanyRepository companyRepository;
 
-    public EmployeeController(EmployeeRepository employeeRepository) {
+    public EmployeeController(EmployeeRepository employeeRepository, CompanyRepository companyRepository) {
         this.employeeRepository = employeeRepository;
+        this.companyRepository = companyRepository;
     }
 
     @GetMapping("/api/employees")
@@ -16,7 +21,19 @@ public class EmployeeController {
     }
 
     @PostMapping("/api/employees")
-    public Employee newEmployee(@RequestBody Employee employee) {
+    public Employee newEmployee(@RequestBody EmployeeDTO dto) {
+        Company company = companyRepository.findById(dto.companyId())
+                .orElseThrow(() -> new RuntimeException("Company not found"));
+
+        Employee employee = new Employee(
+                dto.firstname(),
+                dto.lastname(),
+                dto.email(),
+                dto.phone(),
+                dto.role(),
+                company
+        );
+
         return employeeRepository.save(employee);
     }
 
