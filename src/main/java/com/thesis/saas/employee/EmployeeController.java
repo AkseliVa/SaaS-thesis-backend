@@ -1,9 +1,12 @@
 package com.thesis.saas.employee;
 
 import com.thesis.saas.company.CompanyRepository;
+import com.thesis.saas.project.ProjectDTO;
 import org.springframework.web.bind.annotation.*;
 
 import com.thesis.saas.company.Company;
+
+import java.util.List;
 
 @RestController
 public class EmployeeController {
@@ -16,8 +19,11 @@ public class EmployeeController {
     }
 
     @GetMapping("/api/employees")
-    public Iterable<Employee> getAllEmployees() {
-        return employeeRepository.findAll();
+    public List<EmployeeDTO> getAllEmployees() {
+        return employeeRepository.findAll()
+                .stream()
+                .map(EmployeeDTO::fromEntity)
+                .toList();
     }
 
     @PostMapping("/api/employees")

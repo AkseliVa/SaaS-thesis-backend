@@ -4,6 +4,8 @@ import com.thesis.saas.company.Company;
 import com.thesis.saas.company.CompanyRepository;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 public class ProjectController {
     private final ProjectRepository projectRepository;
@@ -15,13 +17,16 @@ public class ProjectController {
     }
 
     @GetMapping("/api/projects")
-    public Iterable<Project> getAllProjects() {
-        return projectRepository.findAll();
+    public List<ProjectDTO> getAllProjects() {
+        return projectRepository.findAll()
+                .stream()
+                .map(ProjectDTO::fromEntity)
+                .toList();
     }
 
     @PostMapping("/api/projects")
     public Project newProject(@RequestBody ProjectDTO dto) {
-        Company company = companyRepository.findById(dto.companyId())
+        Company company = companyRepository.findById(dto.company_id())
                 .orElseThrow(() -> new RuntimeException("Company not found"));
 
         Project project = new Project(
