@@ -37,8 +37,8 @@ public class Project {
     private Company company;
 
     @JsonManagedReference
-    @OneToOne(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
-    private ProjectsEmployees projectsEmployees;
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ProjectsEmployees> projectsEmployees;
 
     public Project(String name, String description, LocalDate startDate, LocalDate endDate, Company company) {
         this.name = name;
@@ -49,15 +49,6 @@ public class Project {
     }
 
     public Project(String name, String description, LocalDate startDate, LocalDate endDate, Company company, Boolean active) {
-        this.name = name;
-        this.description = description;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.company = company;
-        this.active = active;
-    }
-
-    public Project(String name, String description, LocalDate startDate, LocalDate endDate, Company company, Boolean active, List<Employee> workers) {
         this.name = name;
         this.description = description;
         this.startDate = startDate;

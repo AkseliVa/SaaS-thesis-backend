@@ -2,6 +2,7 @@ package com.thesis.saas.project;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.thesis.saas.employee.Employee;
+import com.thesis.saas.employee.EmployeeDTO;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,11 +22,11 @@ public class ProjectsEmployees {
     private long pe_id;
 
     @JsonBackReference
-    @OneToMany
-    private List<Employee> employees;
-
-    @JsonBackReference
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "project_id")
     private Project project;
+
+    @JsonBackReference
+    @ManyToOne
+    private Employee employee;
 }

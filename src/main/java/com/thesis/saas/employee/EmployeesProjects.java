@@ -26,6 +26,6 @@ public class EmployeesProjects {
     private Employee employee;
 
     @JsonBackReference
-    @OneToMany
-    private List<Project> projects;
+    @ManyToOne
+    private Project project;
 }

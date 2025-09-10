@@ -35,7 +35,6 @@ public class Employee {
 
     @JsonManagedReference
     @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnoreProperties(allowSetters = true, value = {"employee"})
     private List<EmployeesProjects> employeesProjects;
 
     @ManyToOne

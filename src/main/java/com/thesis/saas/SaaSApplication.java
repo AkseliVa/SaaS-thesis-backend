@@ -90,14 +90,25 @@ public class SaaSApplication implements CommandLineRunner {
         ProjectsEmployees pe1 = new ProjectsEmployees();
 
         ep1.setEmployee(employee1);
-        pe1.setEmployees(Arrays.asList(employee1));
+        pe1.setEmployee(employee1);
 
-        ep1.setProjects(Arrays.asList(project1, project2));
+        ep1.setProject(project1);
         pe1.setProject(project1);
 
+        EmployeesProjects ep2 = new EmployeesProjects();
+        ProjectsEmployees pe2 = new ProjectsEmployees();
+
+        ep2.setEmployee(employee2);
+        pe2.setEmployee(employee2);
+
+        ep2.setProject(project1);
+        pe2.setProject(project1);
+
         employeesProjectsRepository.save(ep1);
+        employeesProjectsRepository.save(ep2);
 
         projectsEmployeesRepository.save(pe1);
+        projectsEmployeesRepository.save(pe2);
 
         // Create admins
         Admin admin1 = new Admin("testadmin", "testadmin", "Andy", "Admin", company1);
