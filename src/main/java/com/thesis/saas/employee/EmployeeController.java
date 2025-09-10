@@ -43,14 +43,14 @@ public class EmployeeController {
     }
 
     @PutMapping("/api/employees/{id}")
-    public Employee updateEmployee(@PathVariable long id, @RequestBody Employee employee) {
+    public Employee updateEmployee(@PathVariable long id, @RequestBody EmployeeDTO dto) {
         return employeeRepository.findById(id)
                 .map(existingEmployee -> {
-                  existingEmployee.setFirstname(employee.getFirstname());
-                  existingEmployee.setLastname(employee.getLastname());
-                  existingEmployee.setEmail(employee.getEmail());
-                  existingEmployee.setPhone(employee.getPhone());
-                  existingEmployee.setRole(employee.getRole());
+                  existingEmployee.setFirstname(dto.firstname());
+                  existingEmployee.setLastname(dto.lastname());
+                  existingEmployee.setEmail(dto.email());
+                  existingEmployee.setPhone(dto.phone());
+                  existingEmployee.setRole(dto.role());
 
                   return employeeRepository.save(existingEmployee);
                 })
