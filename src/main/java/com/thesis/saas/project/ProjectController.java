@@ -41,14 +41,14 @@ public class ProjectController {
     }
 
     @PutMapping("/api/projects/{id}")
-    public Project updateProject(@PathVariable Long id, @RequestBody Project project) {
+    public Project updateProject(@PathVariable Long id, @RequestBody ProjectDTO dto) {
         return projectRepository.findById(id)
                 .map(existingProject -> {
-                    existingProject.setName(project.getName());
-                    existingProject.setDescription(project.getDescription());
-                    existingProject.setStartDate(project.getStartDate());
-                    existingProject.setEndDate(project.getEndDate());
-                    existingProject.setActive(project.getActive());
+                    existingProject.setName(dto.name());
+                    existingProject.setDescription(dto.description());
+                    existingProject.setStartDate(dto.startDate());
+                    existingProject.setEndDate(dto.endDate());
+                    existingProject.setActive(dto.active());
 
                     return projectRepository.save(existingProject);
                 })
