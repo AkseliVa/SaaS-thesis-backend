@@ -23,10 +23,11 @@ public class ProjectsEmployees {
 
     @JsonBackReference
     @ManyToOne
-    @JoinColumn(name = "project_id")
-    private Project project;
+    @JoinColumn(name = "employee_id", nullable = false)
+    private Employee employee;
 
     @JsonBackReference
     @ManyToOne
-    private Employee employee;
+    @JoinColumn(name = "project_id", nullable = false)
+    private Project project;
 }

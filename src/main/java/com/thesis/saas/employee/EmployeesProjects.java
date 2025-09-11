@@ -13,7 +13,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name="employee_projects")
+@Table(name="employees_projects")
 public class EmployeesProjects {
 
     @Id
@@ -21,7 +21,7 @@ public class EmployeesProjects {
     private long ep_id;
 
     @JsonBackReference
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "employee_id")
     private Employee employee;
 

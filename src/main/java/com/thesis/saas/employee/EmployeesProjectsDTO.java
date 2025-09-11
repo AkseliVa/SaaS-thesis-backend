@@ -1,18 +1,24 @@
-package com.thesis.saas.employee;
+package com.thesis.saas.project;
 
-import com.thesis.saas.project.ProjectsEmployees;
-import com.thesis.saas.project.ProjectsEmployeesDTO;
+import java.time.LocalDate;
 
 public record EmployeesProjectsDTO(
-        long ep_id,
+        long project_id,
         String name,
-        String description
-    ) {
-        public static EmployeesProjectsDTO fromEntity(EmployeesProjects ep) {
-            return new EmployeesProjectsDTO(
-                    ep.getEp_id(),
-                    ep.getProject().getName(),
-                    ep.getProject().getDescription()
-            );
-        }
+        String description,
+        LocalDate startDate,
+        LocalDate endDate,
+        Boolean active
+) {
+    public static EmployeesProjectsDTO fromEntity(ProjectsEmployees pe) {
+        Project p = pe.getProject();
+        return new EmployeesProjectsDTO(
+                p.getProject_id(),
+                p.getName(),
+                p.getDescription(),
+                p.getStartDate(),
+                p.getEndDate(),
+                p.getActive()
+        );
+    }
 }

@@ -86,26 +86,17 @@ public class SaaSApplication implements CommandLineRunner {
 
         projectRepository.saveAll(Arrays.asList(project1, project2, project3));
 
-        EmployeesProjects ep1 = new EmployeesProjects();
         ProjectsEmployees pe1 = new ProjectsEmployees();
 
-        ep1.setEmployee(employee1);
         pe1.setEmployee(employee1);
 
-        ep1.setProject(project1);
         pe1.setProject(project1);
 
-        EmployeesProjects ep2 = new EmployeesProjects();
         ProjectsEmployees pe2 = new ProjectsEmployees();
 
-        ep2.setEmployee(employee2);
         pe2.setEmployee(employee2);
 
-        ep2.setProject(project1);
         pe2.setProject(project1);
-
-        employeesProjectsRepository.save(ep1);
-        employeesProjectsRepository.save(ep2);
 
         projectsEmployeesRepository.save(pe1);
         projectsEmployeesRepository.save(pe2);

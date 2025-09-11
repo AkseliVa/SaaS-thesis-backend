@@ -35,7 +35,7 @@ public class Employee {
 
     @JsonManagedReference
     @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<EmployeesProjects> employeesProjects;
+    private List<ProjectsEmployees> projectsEmployees;
 
     @ManyToOne
     @JsonBackReference
