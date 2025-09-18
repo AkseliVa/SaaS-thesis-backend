@@ -3,6 +3,8 @@ package com.thesis.saas.company;
 import com.thesis.saas.project.Project;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 public class CompanyController {
     private final CompanyRepository companyRepository;
@@ -12,13 +14,17 @@ public class CompanyController {
     }
 
     @GetMapping("/api/companies")
-    public Iterable<Company> getAllCompanies() {
-        return companyRepository.findAll();
+    public List<CompanyDTO> getAllCompanies() {
+        return companyRepository.findAll().stream()
+                .map(CompanyDTO::fromEntity)
+                .toList();
     }
 
     @GetMapping("/api/companies/{id}")
-    public Company getCompany(@PathVariable long id) {
-        return companyRepository.findById(id).orElse(null);
+    public CompanyDTO getCompany(@PathVariable long id) {
+        return companyRepository.findById(id)
+                .map(CompanyDTO::fromEntity)
+                .orElse(null);
     }
 
     @PostMapping("/api/companies")

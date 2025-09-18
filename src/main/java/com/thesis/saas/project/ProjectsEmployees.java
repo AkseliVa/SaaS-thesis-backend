@@ -2,7 +2,6 @@ package com.thesis.saas.project;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.thesis.saas.employee.Employee;
-import com.thesis.saas.employee.EmployeeDTO;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

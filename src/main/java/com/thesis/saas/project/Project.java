@@ -2,8 +2,6 @@ package com.thesis.saas.project;
 
 import com.fasterxml.jackson.annotation.*;
 import com.thesis.saas.company.Company;
-import com.thesis.saas.employee.Employee;
-import com.thesis.saas.employee.EmployeesProjects;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

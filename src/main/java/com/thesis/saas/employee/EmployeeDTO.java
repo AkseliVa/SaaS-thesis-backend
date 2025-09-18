@@ -1,10 +1,5 @@
 package com.thesis.saas.employee;
 
-import com.thesis.saas.project.EmployeesProjectsDTO;
-import com.thesis.saas.project.Project;
-import com.thesis.saas.project.ProjectDTO;
-import com.thesis.saas.project.ProjectsEmployeesDTO;
-
 import java.util.List;
 
 public record EmployeeDTO(

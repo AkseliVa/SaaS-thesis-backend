@@ -1,4 +1,7 @@
-package com.thesis.saas.project;
+package com.thesis.saas.employee;
+
+import com.thesis.saas.project.Project;
+import com.thesis.saas.project.ProjectsEmployees;
 
 import java.time.LocalDate;
 

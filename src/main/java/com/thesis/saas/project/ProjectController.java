@@ -24,6 +24,13 @@ public class ProjectController {
                 .toList();
     }
 
+    @GetMapping("/api/projects/{id}")
+    public ProjectDTO getProject(@PathVariable long id) {
+        return projectRepository.findById(id)
+                .map(ProjectDTO::fromEntity)
+                .orElseThrow(() -> new RuntimeException("Project not found"));
+    }
+
     @PostMapping("/api/projects")
     public Project newProject(@RequestBody ProjectDTO dto) {
         Company company = companyRepository.findById(dto.company_id())
