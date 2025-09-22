@@ -33,7 +33,7 @@ public class EmployeeController {
 
     @PostMapping("/api/employees")
     public Employee newEmployee(@RequestBody EmployeeDTO dto) {
-        Company company = companyRepository.findById(dto.companyId())
+        Company company = companyRepository.findById(dto.company_id())
                 .orElseThrow(() -> new RuntimeException("Company not found"));
 
         Employee employee = new Employee(

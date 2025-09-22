@@ -2,6 +2,7 @@ package com.thesis.saas.project;
 
 import com.thesis.saas.company.Company;
 import com.thesis.saas.company.CompanyRepository;
+import com.thesis.saas.employee.EmployeeRepository;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -10,10 +11,12 @@ import java.util.List;
 public class ProjectController {
     private final ProjectRepository projectRepository;
     private final CompanyRepository companyRepository;
+    private final EmployeeRepository employeeRepository;
 
-    public ProjectController(ProjectRepository projectRepository, CompanyRepository companyRepository) {
+    public ProjectController(ProjectRepository projectRepository, CompanyRepository companyRepository, EmployeeRepository employeeRepository) {
         this.projectRepository = projectRepository;
         this.companyRepository = companyRepository;
+        this.employeeRepository = employeeRepository;
     }
 
     @GetMapping("/api/projects")
@@ -61,6 +64,23 @@ public class ProjectController {
                     existingProject.setStartDate(dto.startDate());
                     existingProject.setEndDate(dto.endDate());
                     existingProject.setActive(dto.active());
+
+                    if (dto.employees() != null) {
+                        existingProject.getProjectsEmployees().clear();
+
+                        List<ProjectsEmployees> newLinks = dto.employees().stream()
+                                .map(pdto -> {
+                                    var employee = employeeRepository.findById(pdto.pe_id())
+                                            .orElseThrow(() -> new RuntimeException("Project not found: " + pdto.pe_id()));
+                                    ProjectsEmployees pe = new ProjectsEmployees();
+                                    pe.setProject(existingProject);
+                                    pe.setEmployee(employee);
+                                    return pe;
+                                })
+                                .toList();
+
+                        existingProject.getProjectsEmployees().addAll(newLinks);
+                    }
 
                     return projectRepository.save(existingProject);
                 })
