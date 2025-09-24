@@ -54,7 +54,7 @@ public class EmployeeController {
     }
 
     @PutMapping("/api/employees/{id}")
-    public Employee updateEmployee(@PathVariable long id, @RequestBody EmployeeDTO dto) {
+    public EmployeeDTO updateEmployee(@PathVariable long id, @RequestBody EmployeeDTO dto) {
         return employeeRepository.findById(id)
                 .map(existingEmployee -> {
                     existingEmployee.setFirstname(dto.firstname());
@@ -82,8 +82,10 @@ public class EmployeeController {
                         existingEmployee.getProjectsEmployees().addAll(newLinks);
                     }
 
-                    return employeeRepository.save(existingEmployee);
+                    var saved = employeeRepository.save(existingEmployee);
+                    return EmployeeDTO.fromEntity(saved);
                 })
                 .orElseThrow(() -> new RuntimeException("Employee not found"));
+
     }
 }

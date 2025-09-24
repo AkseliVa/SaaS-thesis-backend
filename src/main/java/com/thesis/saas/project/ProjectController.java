@@ -2,6 +2,7 @@ package com.thesis.saas.project;
 
 import com.thesis.saas.company.Company;
 import com.thesis.saas.company.CompanyRepository;
+import com.thesis.saas.employee.EmployeeDTO;
 import com.thesis.saas.employee.EmployeeRepository;
 import org.springframework.web.bind.annotation.*;
 
@@ -56,7 +57,7 @@ public class ProjectController {
     }
 
     @PutMapping("/api/projects/{id}")
-    public Project updateProject(@PathVariable Long id, @RequestBody ProjectDTO dto) {
+    public ProjectDTO updateProject(@PathVariable Long id, @RequestBody ProjectDTO dto) {
         return projectRepository.findById(id)
                 .map(existingProject -> {
                     existingProject.setName(dto.name());
@@ -69,9 +70,9 @@ public class ProjectController {
                         existingProject.getProjectsEmployees().clear();
 
                         List<ProjectsEmployees> newLinks = dto.employees().stream()
-                                .map(pdto -> {
-                                    var employee = employeeRepository.findById(pdto.pe_id())
-                                            .orElseThrow(() -> new RuntimeException("Project not found: " + pdto.pe_id()));
+                                .map(edto -> {
+                                    var employee = employeeRepository.findById(edto.employee_id())
+                                            .orElseThrow(() -> new RuntimeException("Project not found: " + edto.employee_id()));
                                     ProjectsEmployees pe = new ProjectsEmployees();
                                     pe.setProject(existingProject);
                                     pe.setEmployee(employee);
@@ -82,7 +83,8 @@ public class ProjectController {
                         existingProject.getProjectsEmployees().addAll(newLinks);
                     }
 
-                    return projectRepository.save(existingProject);
+                    var saved = projectRepository.save(existingProject);
+                    return ProjectDTO.fromEntity(saved);
                 })
                 .orElseThrow(() -> new RuntimeException("Project not found"));
     }
