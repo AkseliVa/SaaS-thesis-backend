@@ -6,8 +6,6 @@ import com.thesis.saas.company.Company;
 import com.thesis.saas.company.CompanyRepository;
 import com.thesis.saas.employee.Employee;
 import com.thesis.saas.employee.EmployeeRepository;
-import com.thesis.saas.employee.EmployeesProjects;
-import com.thesis.saas.employee.EmployeesProjectsRepository;
 import com.thesis.saas.project.Project;
 import com.thesis.saas.project.ProjectRepository;
 import com.thesis.saas.project.ProjectsEmployees;
@@ -20,7 +18,6 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Arrays;
 
 @SpringBootApplication
@@ -29,15 +26,13 @@ public class SaaSApplication implements CommandLineRunner {
     private final CompanyRepository companyRepository;
     private final EmployeeRepository employeeRepository;
     private final ProjectRepository projectRepository;
-    private final EmployeesProjectsRepository employeesProjectsRepository;
     private final ProjectsEmployeesRepository projectsEmployeesRepository;
 
-    public SaaSApplication(AdminRepository aRepository, CompanyRepository cRepository, EmployeeRepository eRepository, ProjectRepository pRepository, EmployeesProjectsRepository epRepository, ProjectsEmployeesRepository peRepository) {
+    public SaaSApplication(AdminRepository aRepository, CompanyRepository cRepository, EmployeeRepository eRepository, ProjectRepository pRepository, ProjectsEmployeesRepository peRepository) {
         this.adminRepository = aRepository;
         this.companyRepository = cRepository;
         this.employeeRepository = eRepository;
         this.projectRepository = pRepository;
-        this.employeesProjectsRepository = epRepository;
         this.projectsEmployeesRepository = peRepository;
     }
 

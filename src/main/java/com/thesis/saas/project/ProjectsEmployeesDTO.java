@@ -1,7 +1,6 @@
 package com.thesis.saas.project;
 
 import com.thesis.saas.employee.Employee;
-import com.thesis.saas.employee.EmployeesProjects;
 
 public record ProjectsEmployeesDTO(
         long employee_id,
