@@ -37,10 +37,6 @@ public class CompanyController {
         Company company = companyRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Company not found"));
 
-        //for (Project project : company.getProjects()) {
-        //  project.getProjectEmployees().clear();
-        //}
-
         companyRepository.deleteById(id);
     }
 }

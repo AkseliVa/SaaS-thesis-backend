@@ -2,6 +2,7 @@ package com.thesis.saas.project;
 
 import com.fasterxml.jackson.annotation.*;
 import com.thesis.saas.company.Company;
+import com.thesis.saas.customer.Customer;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -34,6 +35,11 @@ public class Project {
     @JoinColumn(name = "company_id")
     private Company company;
 
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name="customer_id")
+    private Customer customer;
+
     @JsonManagedReference
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ProjectsEmployees> projectsEmployees;
@@ -53,6 +59,16 @@ public class Project {
         this.endDate = endDate;
         this.company = company;
         this.active = active;
+    }
+
+    public Project(String name, String description, LocalDate startDate, LocalDate endDate, Company company, Boolean active, Customer customer) {
+        this.name = name;
+        this.description = description;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.company = company;
+        this.active = active;
+        this.customer = customer;
     }
 
 }

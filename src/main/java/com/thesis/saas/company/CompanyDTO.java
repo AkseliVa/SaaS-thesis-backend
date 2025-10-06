@@ -1,5 +1,6 @@
 package com.thesis.saas.company;
 
+import com.thesis.saas.customer.CustomerDTO;
 import com.thesis.saas.employee.EmployeeDTO;
 import com.thesis.saas.project.ProjectDTO;
 
@@ -9,7 +10,8 @@ public record CompanyDTO(
         long company_id,
         String name,
         List<EmployeeDTO> employees,
-        List<ProjectDTO> projects
+        List<ProjectDTO> projects,
+        List<CustomerDTO> customers
 ) {
     public static CompanyDTO fromEntity(Company company) {
         return new CompanyDTO(
@@ -20,6 +22,9 @@ public record CompanyDTO(
                         .toList(),
                 company.getProjects().stream()
                         .map(ProjectDTO::fromEntity)
+                        .toList(),
+                company.getCustomers().stream()
+                        .map(CustomerDTO::fromEntity)
                         .toList()
         );
     }

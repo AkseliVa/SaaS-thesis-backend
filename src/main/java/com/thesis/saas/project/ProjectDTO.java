@@ -11,7 +11,8 @@ public record ProjectDTO(
         LocalDate endDate,
         Boolean active,
         List<ProjectsEmployeesDTO> employees,
-        long company_id
+        long company_id,
+        String customerName
 ) {
     public static ProjectDTO fromEntity(Project project) {
         return new ProjectDTO(
@@ -24,7 +25,8 @@ public record ProjectDTO(
                 project.getProjectsEmployees().stream()
                         .map(ProjectsEmployeesDTO::fromEntity)
                         .toList(),
-                project.getCompany().getCompany_id()
+                project.getCompany().getCompany_id(),
+                project.getCustomer().getName()
         );
     }
 }

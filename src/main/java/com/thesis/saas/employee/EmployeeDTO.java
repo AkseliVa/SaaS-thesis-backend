@@ -10,7 +10,7 @@ public record EmployeeDTO(
         String phone,
         String role,
         List<EmployeesProjectsDTO> projects,
-        Long company_id
+        long company_id
 ) {
     public static EmployeeDTO fromEntity(Employee employee) {
         return new EmployeeDTO(
