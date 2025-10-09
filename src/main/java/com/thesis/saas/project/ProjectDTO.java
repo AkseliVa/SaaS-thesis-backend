@@ -1,5 +1,8 @@
 package com.thesis.saas.project;
 
+import com.thesis.saas.customer.CustomerDTO;
+import com.thesis.saas.customer.CustomerSimpleDTO;
+
 import java.time.LocalDate;
 import java.util.List;
 
@@ -12,7 +15,7 @@ public record ProjectDTO(
         Boolean active,
         List<ProjectsEmployeesDTO> employees,
         long company_id,
-        String customerName
+        CustomerSimpleDTO customer
 ) {
     public static ProjectDTO fromEntity(Project project) {
         return new ProjectDTO(
@@ -26,7 +29,9 @@ public record ProjectDTO(
                         .map(ProjectsEmployeesDTO::fromEntity)
                         .toList(),
                 project.getCompany().getCompany_id(),
-                project.getCustomer().getName()
+                project.getCustomer() != null
+                        ? CustomerSimpleDTO.fromEntity(project.getCustomer())
+                        : null
         );
     }
 }

@@ -2,6 +2,8 @@ package com.thesis.saas.project;
 
 import com.thesis.saas.company.Company;
 import com.thesis.saas.company.CompanyRepository;
+import com.thesis.saas.customer.Customer;
+import com.thesis.saas.customer.CustomerRepository;
 import com.thesis.saas.employee.EmployeeDTO;
 import com.thesis.saas.employee.EmployeeRepository;
 import org.springframework.web.bind.annotation.*;
@@ -13,11 +15,13 @@ public class ProjectController {
     private final ProjectRepository projectRepository;
     private final CompanyRepository companyRepository;
     private final EmployeeRepository employeeRepository;
+    private final CustomerRepository customerRepository;
 
-    public ProjectController(ProjectRepository projectRepository, CompanyRepository companyRepository, EmployeeRepository employeeRepository) {
+    public ProjectController(ProjectRepository projectRepository, CompanyRepository companyRepository, EmployeeRepository employeeRepository, CustomerRepository customerRepository) {
         this.projectRepository = projectRepository;
         this.companyRepository = companyRepository;
         this.employeeRepository = employeeRepository;
+        this.customerRepository = customerRepository;
     }
 
     @GetMapping("/api/projects")
@@ -39,6 +43,8 @@ public class ProjectController {
     public Project newProject(@RequestBody ProjectDTO dto) {
         Company company = companyRepository.findById(dto.company_id())
                 .orElseThrow(() -> new RuntimeException("Company not found"));
+        Customer customer = customerRepository.findById(dto.customer().customer_id())
+                .orElseThrow(() -> new RuntimeException("Customer not found"));
 
         Project project = new Project(
                 dto.name(),
@@ -46,7 +52,8 @@ public class ProjectController {
                 dto.startDate(),
                 dto.endDate(),
                 company,
-                dto.active()
+                dto.active(),
+                customer
         );
         return projectRepository.save(project);
     }
