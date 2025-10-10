@@ -1,6 +1,11 @@
 package com.thesis.saas.customer;
 
+import com.thesis.saas.company.Company;
+import com.thesis.saas.company.CompanyRepository;
+import com.thesis.saas.employee.Employee;
 import com.thesis.saas.employee.EmployeeRepository;
+import com.thesis.saas.project.Project;
+import com.thesis.saas.project.ProjectRepository;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -9,8 +14,13 @@ import java.util.List;
 public class CustomerController {
     private final CustomerRepository customerRepository;
     private final EmployeeRepository employeeRepository;
+    private final CompanyRepository companyRepository;
+    private final ProjectRepository projectRepository;
 
-    public CustomerController(CustomerRepository customerRepository, EmployeeRepository employeeRepository) {this.customerRepository = customerRepository; this.employeeRepository = employeeRepository;}
+    public CustomerController(CustomerRepository customerRepository, EmployeeRepository employeeRepository, CompanyRepository companyRepository, ProjectRepository projectRepository) {this.customerRepository = customerRepository; this.employeeRepository = employeeRepository;
+        this.companyRepository = companyRepository;
+        this.projectRepository = projectRepository;
+    }
 
     @GetMapping("/api/customers")
     public List<CustomerDTO> getAllCustomers() {
@@ -27,27 +37,43 @@ public class CustomerController {
     }
 
     @PostMapping("/api/customers")
-    public Customer newCustomer(@RequestBody Customer customer) { return customerRepository.save(customer);}
+    public Customer newCustomer(@RequestBody CustomerDTO dto) {
+        Company company = companyRepository.findById(dto.company_id())
+                .orElseThrow(() -> new RuntimeException("Company not found"));
+        Employee customerManager = employeeRepository.findById(dto.customerManager().employee_id())
+                .orElseThrow(() -> new RuntimeException("Employee not found"));
+
+        Customer customer = new Customer(
+                dto.name(),
+                dto.contactPerson(),
+                dto.contactEmail(),
+                dto.contactPhone(),
+                customerManager,
+                company
+        );
+        return customerRepository.save(customer);}
 
     @PutMapping("/api/customers/{id}")
-    public Customer updateCustomer(@PathVariable long id, @RequestBody Customer updatedCustomer) {
+    public CustomerDTO updateCustomer(@PathVariable long id, @RequestBody CustomerDTO dto) {
         return customerRepository.findById(id)
                 .map(existingCustomer -> {
-                    existingCustomer.setName(updatedCustomer.getName());
-                    existingCustomer.setContactPerson(updatedCustomer.getContactPerson());
-                    existingCustomer.setContactEmail(updatedCustomer.getContactEmail());
-                    existingCustomer.setContactPhone(updatedCustomer.getContactPhone());
+                    existingCustomer.setName(dto.name());
+                    existingCustomer.setContactPerson(dto.contactPerson());
+                    existingCustomer.setContactEmail(dto.contactEmail());
+                    existingCustomer.setContactPhone(dto.contactPhone());
 
-                    if (updatedCustomer.getCustomerManager() != null) {
-                        var manager = employeeRepository.findById(updatedCustomer.getCustomerManager().getEmployee_id())
+                    if (dto.customerManager() != null) {
+                        var manager = employeeRepository.findById(dto.customerManager().employee_id())
                                 .orElse(null);
                         existingCustomer.setCustomerManager(manager);
                     }
 
-                    return customerRepository.save(existingCustomer);
+                    var saved = customerRepository.save(existingCustomer);
+                    return CustomerDTO.fromEntity(saved);
                 })
                 .orElseThrow(() -> new RuntimeException("Customer not found"));
     }
+
 
     @DeleteMapping("/api/customers/{id}")
     public void deleteCustomer(@PathVariable long id) {

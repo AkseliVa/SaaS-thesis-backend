@@ -6,6 +6,7 @@ import com.thesis.saas.company.Company;
 import com.thesis.saas.employee.Employee;
 import com.thesis.saas.employee.EmployeeDTO;
 import com.thesis.saas.project.Project;
+import com.thesis.saas.project.ProjectDTO;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -53,6 +54,16 @@ public class Customer {
         this.contactEmail = contactEmail;
         this.contactPhone = contactPhone;
         this.customerManager = customerManager;
+        this.company = company;
+    }
+
+    public Customer(String name, String contactPerson, String contactEmail, String contactPhone, Employee customerManager, Company company, List<Project> projects) {
+        this.name = name;
+        this.contactPerson = contactPerson;
+        this.contactEmail = contactEmail;
+        this.contactPhone = contactPhone;
+        this.customerManager = customerManager;
+        this.projects = projects;
         this.company = company;
     }
 }
