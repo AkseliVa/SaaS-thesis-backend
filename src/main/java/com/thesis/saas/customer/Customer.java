@@ -38,7 +38,7 @@ public class Customer {
 
     private String contactPhone;
 
-    @OneToOne
+    @ManyToOne
     private Employee customerManager;
 
     @ManyToOne
