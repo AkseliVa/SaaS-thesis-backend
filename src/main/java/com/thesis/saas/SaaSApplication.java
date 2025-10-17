@@ -16,6 +16,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -43,20 +45,6 @@ public class SaaSApplication implements CommandLineRunner {
     public static void main(String[] args) {
         SpringApplication.run(SaaSApplication.class, args);
     }
-
-    @Bean
-    public WebMvcConfigurer corsConfigurer() {
-        return new WebMvcConfigurer() {
-            @Override
-            public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**") // Allow all API endpoints
-                        .allowedOrigins("http://localhost:5173") // Frontend origin
-                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS") // Allow common HTTP methods
-                        .allowedHeaders("*"); // Allow all headers
-            }
-        };
-    }
-
 
     public void run(String... args) throws Exception {
         // Create test companies
@@ -105,8 +93,10 @@ public class SaaSApplication implements CommandLineRunner {
         projectsEmployeesRepository.save(pe2);
 
         // Create test admins
-        Admin admin1 = new Admin("testadmin", "testadmin", "Andy", "Admin", company1);
-        Admin admin2 = new Admin("secondadmin", "secondadmin", "Sally", "SecondAdmin", company2);
+        PasswordEncoder encoder = new BCryptPasswordEncoder();
+
+        Admin admin1 = new Admin("testadmin", encoder.encode("testadmin"), company1, "ADMIN");
+        Admin admin2 = new Admin("secondadmin", encoder.encode("secondadmin"), company2, "ADMIN");
 
         adminRepository.saveAll(Arrays.asList(admin1, admin2));
     }

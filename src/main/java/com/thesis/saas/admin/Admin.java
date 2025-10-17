@@ -10,7 +10,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name="admins")
+@Table(name="admin")
 public class Admin {
 
     @Id
@@ -23,17 +23,22 @@ public class Admin {
     @Column(nullable = false)
     private String password;
 
-    private String firstname;
-    private String lastname;
-
     @OneToOne(orphanRemoval = true)
     private Company company;
 
-    public Admin(String username, String password, String firstname, String lastname, Company company) {
+    @Column
+    private String role;
+
+    public Admin(String username, String password, Company company, String role) {
         this.username = username;
         this.password = password;
-        this.firstname = firstname;
-        this.lastname = lastname;
         this.company = company;
+        this.role = role;
+    }
+
+    public Admin(String username, String password, String role) {
+        this.username = username;
+        this.password = password;
+        this.role = role;
     }
 }
