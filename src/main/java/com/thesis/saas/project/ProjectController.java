@@ -43,8 +43,11 @@ public class ProjectController {
     public Project newProject(@RequestBody ProjectDTO dto) {
         Company company = companyRepository.findById(dto.company_id())
                 .orElseThrow(() -> new RuntimeException("Company not found"));
-        Customer customer = customerRepository.findById(dto.customer().customer_id())
-                .orElseThrow(() -> new RuntimeException("Customer not found"));
+        Customer customer = null;
+        if (dto.customer() != null && dto.customer().customer_id() != 0) {
+            customer = customerRepository.findById(dto.customer().customer_id())
+                    .orElseThrow(() -> new RuntimeException("Customer not found"));
+        }
 
         Project project = new Project(
                 dto.name(),

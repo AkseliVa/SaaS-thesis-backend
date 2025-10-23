@@ -1,6 +1,5 @@
 package com.thesis.saas.company;
 
-import com.thesis.saas.project.Project;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
