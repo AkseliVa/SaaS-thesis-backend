@@ -1,8 +1,3 @@
-
----
-
-## BACKEND README — `README-backend.md`
-
 # Company Management Backend
 
 This is the **Spring Boot backend** for the Company Management application.  
