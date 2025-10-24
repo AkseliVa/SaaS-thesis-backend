@@ -141,9 +141,9 @@ data persistence.
 
 ---
 
-## 🔗 REST API Endpoints
+## REST API Endpoints
 
-### 🔐 Authentication
+### Authentication
 | Method | Endpoint | Description |
 |---------|-----------|-------------|
 | `POST` | `/api/auth/register` | Register a new admin/company |
